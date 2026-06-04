@@ -41,13 +41,13 @@ export interface Checkout {
   subtotal: number;
   impuesto: number;
   total_estimado: number;
-  status: string;  a la columna de crovexa_orders
+  status: string;
   created_at: string;
 }
 
 export interface CheckoutItem {
   id: string;
-  order_id: string;  a order_id
+  order_id: string; // Actualizado a order_id
   plan_id: string;
   quantity: number;
   custom_price: number | null;
