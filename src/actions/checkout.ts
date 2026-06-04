@@ -1,4 +1,5 @@
 'use server';
+
 import { CheckoutPayload, CartItem, Checkout } from '@/types';
 import { createClient } from '@supabase/supabase-js'; 
 import { sendReceiptEmail } from '@/lib/mail';
@@ -12,19 +13,19 @@ function requireEnvVar(name: string): string {
   return value;
 }
 
-const getOctanoHeaders = (extraHeaders = {}) => ({
+const getEtominHeaders = (extraHeaders = {}) => ({
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'User-Agent': 'Posiciona Marketing/1.0',
+  'User-Agent': 'Crovexa Systems/2.0',
   ...extraHeaders
 });
 
-async function safeOctanoFetch(url: string, options: RequestInit, stepName: string) {
+async function safeEtominFetch(url: string, options: RequestInit, stepName: string) {
   try {
     const res = await fetch(url, options);
     const text = await res.text();
     
-    if (!res.ok) console.warn(`⚠️ [Octano] Código HTTP ${res.status} en ${stepName}`);
+    if (!res.ok) console.warn(`⚠️ [Etomin] Código HTTP ${res.status} en ${stepName}`);
 
     try {
       return JSON.parse(text);
@@ -46,32 +47,34 @@ export async function processCheckout(formData: CheckoutPayload) {
       requireEnvVar('SUPABASE_SERVICE_ROLE_KEY')
     );
 
-    const OCTANO_BASE_URL = requireEnvVar('OCTANO_BASE_URL');
-    const OCTANO_EMAIL = requireEnvVar('OCTANO_EMAIL');
-    const OCTANO_PASSWORD = requireEnvVar('OCTANO_PASSWORD');
+    // Variables de entorno para ETOMIN
+    const ETOMIN_BASE_URL = requireEnvVar('ETOMIN_BASE_URL');
+    const ETOMIN_EMAIL = requireEnvVar('ETOMIN_EMAIL');
+    const ETOMIN_PASSWORD = requireEnvVar('ETOMIN_PASSWORD');
+    const NEXT_PUBLIC_APP_URL = requireEnvVar('NEXT_PUBLIC_APP_URL');
 
-    // 1. LOGIN
-    const signinData = await safeOctanoFetch(`${OCTANO_BASE_URL}/signin`, {
+    // 1. LOGIN EN ETOMIN
+    const signinData = await safeEtominFetch(`${ETOMIN_BASE_URL}/signin`, {
       method: 'POST',
-      headers: getOctanoHeaders(),
-      body: JSON.stringify({ email: OCTANO_EMAIL, password: OCTANO_PASSWORD })
-    }, 'Login Octano');
+      headers: getEtominHeaders(),
+      body: JSON.stringify({ email: ETOMIN_EMAIL, password: ETOMIN_PASSWORD })
+    }, 'Login Etomin');
 
     if (!signinData.authToken) throw new Error("Credenciales del procesador rechazadas.");
     
-    // 2. TOKENIZAR
-    const tokenData = await safeOctanoFetch(`${OCTANO_BASE_URL}/card/tokenizer`, {
+    // 2. TOKENIZAR TARJETA
+    const tokenData = await safeEtominFetch(`${ETOMIN_BASE_URL}/card/tokenizer`, {
       method: 'POST',
-      headers: getOctanoHeaders({ 'Authorization': `Bearer ${signinData.authToken}` }),
+      headers: getEtominHeaders({ 'Authorization': `Bearer ${signinData.authToken}` }),
       body: JSON.stringify({
         cardData: {
-          cardNumber: cardInfo.number,
+          cardNumber: cardInfo.number.replace(/\s/g, ''),
           cardholderName: cardInfo.name,
           expirationMonth: cardInfo.expiry.split('/')[0],
           expirationYear: cardInfo.expiry.split('/')[1],
         }
       })
-    }, 'Tokenización');
+    }, 'Tokenización Etomin');
 
     if (!tokenData.cardNumberToken) throw new Error("Tarjeta declinada o inválida.");
 
@@ -83,7 +86,7 @@ export async function processCheckout(formData: CheckoutPayload) {
     const salePayload = {
       amount: Number(totalFinal.toFixed(2)),
       currency: 484, // Código ISO numérico para MXN
-      reference: `PM-${Date.now()}`, // Prefijo Posiciona Marketing
+      reference: `CX-${Date.now()}`, // Prefijo Crovexa
       customerInformation: {
         firstName: contactInfo.firstName,
         lastName: contactInfo.lastName,
@@ -100,27 +103,29 @@ export async function processCheckout(formData: CheckoutPayload) {
         cvv: cardInfo.cvv
       },
       items: items.map((i: CartItem) => ({
-        title: i.crovexa_plans?.title || 'Estrategia Personalizada',
+        title: i.crovexa_plans?.title || 'Instancia Personalizada',
         amount: Number((i.custom_price !== null ? i.custom_price : (i.crovexa_plans?.price || 0)).toFixed(2)),
         quantity: i.quantity,
         id: i.plan_id.toString() 
-      }))
+      })),
+      // Parámetro de redirección requerido por ETOMIN
+      redirectUrl: `${NEXT_PUBLIC_APP_URL}/checkout/callback`
     };
 
-    const saleData = await safeOctanoFetch(`${OCTANO_BASE_URL}/sale`, {
+    const saleData = await safeEtominFetch(`${ETOMIN_BASE_URL}/sale`, {
       method: 'POST',
-      headers: getOctanoHeaders({ 'Authorization': `Bearer ${signinData.authToken}` }),
+      headers: getEtominHeaders({ 'Authorization': `Bearer ${signinData.authToken}` }),
       body: JSON.stringify(salePayload)
-    }, 'Procesar Venta');
+    }, 'Procesar Venta Etomin');
 
-    // DEBUG: Ver qué dice Octano si falla
-    if (saleData.status !== 'APPROVED') {
-      console.error("\n❌ [ERROR DE OCTANO DETALLADO]:", JSON.stringify(saleData, null, 2), "\n");
+    // Validación de respuesta de ETOMIN
+    if (saleData.status !== 'APPROVED' && saleData.status !== 'PENDING') {
+      console.error("\n❌ [ERROR DE ETOMIN DETALLADO]:", JSON.stringify(saleData, null, 2), "\n");
       const reason = saleData.message || saleData.responseCode || "Transacción declinada.";
       throw new Error(`El banco rechazó el pago: ${reason}`);
     }
 
-    // 4. GUARDAR EN BD
+    // 4. GUARDAR EN BD SUPABASE
     const { data: checkoutRecord, error: dbError } = await supabaseAdmin
       .from('crovexa_orders')
       .insert({
@@ -136,17 +141,19 @@ export async function processCheckout(formData: CheckoutPayload) {
         subtotal: subtotalCalc,
         impuesto: impuestoCalc,
         total_estimado: totalFinal,
-        status: 'paid'
+        status: saleData.status === 'PENDING' ? 'pending' : 'paid',
+        // Si tienes una columna en tu tabla para el transactionId, es buena práctica guardarlo:
+        // etomin_transaction_id: saleData.transactionId || null 
       })
       .select()
       .single();
 
     if (dbError || !checkoutRecord) {
       console.error("[CRÍTICO] Detalle del error al insertar Checkout:", dbError);
-      throw new Error("Pago exitoso, pero falló la generación del recibo.");
+      throw new Error("Pago exitoso, pero falló la generación del recibo interno.");
     }
 
-    // 5. GUARDAR ITEMS
+    // 5. GUARDAR ITEMS EN BD
     const checkoutItems = items.map((item: CartItem) => ({
       order_id: checkoutRecord.id,
       plan_id: item.plan_id,
@@ -158,10 +165,16 @@ export async function processCheckout(formData: CheckoutPayload) {
     const { error: itemsError } = await supabaseAdmin.from('crovexa_order_items').insert(checkoutItems);
     if (itemsError) console.error("[CRÍTICO] Detalle del error en Items:", itemsError);
 
-    // 6. ENVIAR CORREO
+    // 6. ENVIAR CORREO DE RECIBO
     await sendReceiptEmail(checkoutRecord as Checkout, items, locale === 'en');
 
+    // 7. RESPONDER (Manejo de redirección para ETOMIN 3D Secure / Sandbox)
+    if (saleData.redirectTo) {
+      return { success: true, redirect: saleData.redirectTo };
+    }
+
     return { success: true };
+
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Error inesperado.";
     return { success: false, message: errorMessage };
