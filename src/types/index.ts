@@ -24,7 +24,7 @@ export interface CartItem {
   custom_price: number | null; 
   quote_id: string | null;     
   created_at?: string;
-  ar_plans?: Plan; // Actualizado a ar_plans
+  crovexa_plans?: Plan; // Actualizado a crovexa_plans
 }
 
 export interface Checkout {
@@ -41,13 +41,13 @@ export interface Checkout {
   subtotal: number;
   impuesto: number;
   total_estimado: number;
-  status: string; // Actualizado a la columna de ar_orders
+  status: string;  a la columna de crovexa_orders
   created_at: string;
 }
 
 export interface CheckoutItem {
   id: string;
-  order_id: string; // Actualizado a order_id
+  order_id: string;  a order_id
   plan_id: string;
   quantity: number;
   custom_price: number | null;

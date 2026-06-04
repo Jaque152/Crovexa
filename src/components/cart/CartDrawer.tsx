@@ -1,7 +1,7 @@
 'use client';
 
 import { useCart } from '@/hooks/use-cart';
-import { X, ShoppingBag, ArrowRight } from 'lucide-react';
+import { X, Server, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartItemComponent } from './CartItem';
 import { useLocale } from 'next-intl';
@@ -17,38 +17,34 @@ export function CartDrawer() {
   const formatPrice = (p: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(p);
 
   return (
-    <div className="fixed inset-0 z-[100] flex justify-end">
-      {/* Overlay oscuro para contrastar con el panel claro */}
+    <div className="fixed inset-0 z-[200] flex justify-end">
       <div 
-        className="absolute inset-0 bg-[var(--accent-dark)]/40 backdrop-blur-sm animate-in fade-in duration-300" 
+        className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-300" 
         onClick={() => setIsOpen(false)} 
       />
       
-      {/* Panel lateral: Glassmorphism Ultra Claro */}
-      <div className="relative w-full max-w-md glass-panel bg-white/90 h-full shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col border-l border-white/50">
+      <div className="relative w-full max-w-md bg-[#020617] border-l border-slate-800 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500">
         
-        {/* Header */}
-        <div className="p-6 border-b border-[var(--text-main)]/10 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-[var(--text-main)] tracking-tight flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[var(--accent-purple)]/10 flex items-center justify-center">
-              <ShoppingBag className="text-[var(--accent-purple)] w-5 h-5" />
-            </div>
-            {isEs ? 'Tu Carrito' : 'Your Cart'}
+        {/* Header Consola */}
+        <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/30">
+          <h2 className="text-xl font-mono font-bold text-white flex items-center gap-3">
+            <Server className="text-sky-400 w-5 h-5" />
+            {isEs ? 'Cola de Despliegue' : 'Deployment Queue'}
           </h2>
-          <button onClick={() => setIsOpen(false)} className="text-[var(--text-main)]/50 hover:text-[var(--accent-magenta)] transition-colors p-2 bg-white/50 rounded-full">
-            <X className="w-5 h-5" />
+          <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white transition-colors p-2 bg-slate-800/50 rounded-lg">
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hidden">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hidden">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-20 h-20 bg-black/5 rounded-full flex items-center justify-center text-[var(--accent-cyan)] shadow-inner">
-                <ShoppingBag className="w-10 h-10" />
+              <div className="w-16 h-16 border border-slate-800 bg-slate-900/50 rounded-2xl flex items-center justify-center text-slate-700">
+                <Server className="w-6 h-6" />
               </div>
-              <p className="text-[var(--text-main)]/60 font-medium text-lg">
-                {isEs ? 'Aún no has seleccionado ninguna estrategia.' : 'You haven\'t selected any strategy yet.'}
+              <p className="text-slate-500 font-mono text-xs">
+                {isEs ? '0 instancias en cola.' : '0 instances queued.'}
               </p>
             </div>
           ) : (
@@ -56,42 +52,30 @@ export function CartDrawer() {
           )}
         </div>
 
-        {/* Footer del Drawer */}
+        {/* Footer Checkout */}
         {items.length > 0 && (
-          <div className="p-8 border-t border-[var(--text-main)]/10 bg-white/50 backdrop-blur-md">
-            <div className="flex justify-between items-end mb-8 font-sans">
-              <span className="text-[var(--text-main)]/60 text-sm font-bold uppercase tracking-widest">
-                {isEs ? 'Total de Inversión' : 'Total Investment'}
+          <div className="p-6 border-t border-slate-800 bg-[#020617]">
+            <div className="flex justify-between items-end mb-6 font-mono">
+              <span className="text-slate-500 text-xs font-bold uppercase tracking-widest">
+                {isEs ? 'Coste Total' : 'Total Cost'}
               </span>
               <div className="text-right">
-                  {/* Mostramos el total con IVA para que el cliente no se lleve sorpresas en el checkout */}
-                  <span className="text-3xl font-bold text-gradient-pop block">{formatPrice(total * 1.16)}</span>
-                  <span className="text-[10px] text-[var(--text-main)]/50 font-bold uppercase tracking-tighter">
-                    {isEs ? 'Subtotal + 16% de IVA' : 'Subtotal + 16% VAT'}
+                  <span className="text-2xl font-black text-white block">{formatPrice(total * 1.16)}</span>
+                  <span className="text-[9px] text-sky-400 font-bold uppercase tracking-tighter">
+                    {isEs ? 'Base + 16% IVA' : 'Base + 16% VAT'}
                   </span>
               </div>
             </div>
-            <div className="flex flex-col gap-3 mt-6">
-              {/* BOTÓN VER CARRITO (Secundario) */}
-              <Button asChild className="w-full h-14 rounded-xl font-bold border border-[var(--accent-purple)]/30 bg-white/50 text-[var(--accent-purple)] hover:bg-white transition-all p-0 shadow-sm">
-                <Link 
-                  href={`/${locale}/cart`} 
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center w-full h-full"
-                >
-                  {isEs ? 'Ver carrito completo' : 'View full cart'}
-                </Link>
-              </Button>
-
-              {/* BOTÓN CHECKOUT (Primario) */}
-              <Button asChild className="w-full bg-[var(--accent-dark)] hover:scale-105 text-white h-14 rounded-xl shadow-xl shadow-[var(--accent-dark)]/20 transition-all p-0 group">
+            
+            <div className="flex flex-col gap-3">
+              <Button asChild className="w-full bg-sky-500 hover:bg-sky-400 text-slate-950 h-12 rounded-xl shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-all p-0">
                 <Link 
                   href={`/${locale}/checkout`} 
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center w-full h-full font-bold text-lg"
+                  className="flex items-center justify-center w-full h-full font-bold text-sm"
                 >
-                  {isEs ? 'Continuar al Checkout' : 'Proceed to Checkout'} 
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  {isEs ? 'Ejecutar Transacción' : 'Execute Transaction'} 
+                  <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>
             </div>

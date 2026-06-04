@@ -100,8 +100,8 @@ export async function processCheckout(formData: CheckoutPayload) {
         cvv: cardInfo.cvv
       },
       items: items.map((i: CartItem) => ({
-        title: i.ar_plans?.title || 'Estrategia Personalizada',
-        amount: Number((i.custom_price !== null ? i.custom_price : (i.ar_plans?.price || 0)).toFixed(2)),
+        title: i.crovexa_plans?.title || 'Estrategia Personalizada',
+        amount: Number((i.custom_price !== null ? i.custom_price : (i.crovexa_plans?.price || 0)).toFixed(2)),
         quantity: i.quantity,
         id: i.plan_id.toString() 
       }))
@@ -122,7 +122,7 @@ export async function processCheckout(formData: CheckoutPayload) {
 
     // 4. GUARDAR EN BD
     const { data: checkoutRecord, error: dbError } = await supabaseAdmin
-      .from('ar_orders')
+      .from('crovexa_orders')
       .insert({
         nombre: contactInfo.firstName,
         apellidos: contactInfo.lastName,
@@ -155,7 +155,7 @@ export async function processCheckout(formData: CheckoutPayload) {
       quote_id: item.quote_id
     }));
 
-    const { error: itemsError } = await supabaseAdmin.from('ar_order_items').insert(checkoutItems);
+    const { error: itemsError } = await supabaseAdmin.from('crovexa_order_items').insert(checkoutItems);
     if (itemsError) console.error("[CRÍTICO] Detalle del error en Items:", itemsError);
 
     // 6. ENVIAR CORREO

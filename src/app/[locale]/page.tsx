@@ -4,10 +4,11 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Code2, ArrowUpRight, Cpu, CheckCircle, Plus,Server, Terminal } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { AddToCartButton } from './services/AddToCartButton';
 import { Plan } from '@/types';
+import { ClientT } from '@/components/shared/ClientT';
 
 export default function HomePage() {
   const locale = useLocale();
@@ -16,12 +17,11 @@ export default function HomePage() {
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [activeService, setActiveService] = useState<number | null>(null);
-  const [featuredIdx, setFeaturedIdx] = useState(0);
 
   useEffect(() => {
     const fetchPlans = async () => {
       const { data } = await supabase
-        .from('ar_plans') 
+        .from('crovexa_plans') 
         .select('*')
         .eq('is_active', true)
         .order('price', { ascending: true });
@@ -34,154 +34,105 @@ export default function HomePage() {
   const customPlan = plans.find(p => p.title.toLowerCase().includes('personalizado'));
   const formatPrice = (p: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(p);
 
-  // TEXTOS DEL HERO: INTERACTIVOS (PARAFRASEADOS)
   const highlights = [
-    { 
-      label: isEs ? "Estrategia" : "Strategy", 
-      title: isEs ? "Planificación de Alto Nivel" : "High-Level Planning", 
-      desc: isEs 
-        ? "Trazamos el camino ideal para alinear tus capacidades internas con objetivos de mercado desafiantes." 
-        : "We trace the ideal path to align your internal capabilities with challenging market objectives." 
-    },
-    { 
-      label: isEs ? "Cumplimiento" : "Compliance", 
-      title: isEs ? "Blindaje Operativo" : "Operational Shielding", 
-      desc: isEs 
-        ? "Aseguramos que la operación diaria de tu negocio esté completamente respaldada por los lineamientos legales e institucionales vigentes." 
-        : "We ensure that your business's daily operations are fully supported by current legal and institutional guidelines." 
-    },
-    { 
-      label: isEs ? "Mercado" : "Market", 
-      title: isEs ? "Inteligencia de Datos" : "Data Intelligence", 
-      desc: isEs 
-        ? "Disipamos la incertidumbre comercial transformando investigaciones exhaustivas en decisiones tácticas precisas." 
-        : "We dispel commercial uncertainty by transforming exhaustive research into precise tactical decisions." 
-    }
+    { label: isEs ? "Núcleo" : "Core", title: isEs ? "Arquitectura de Datos" : "Data Architecture" },
+    { label: isEs ? "Interfaz" : "UI/UX", title: isEs ? "Experiencias Fricción Cero" : "Zero-Friction Experiences" },
+    { label: isEs ? "Seguridad" : "SecOps", title: isEs ? "Infraestructura Blindada" : "Shielded Infrastructure" }
   ];
 
-  // ACORDEÓN DE SERVICIOS (PARAFRASEADOS)
   const services = [
     {
-      title: isEs ? "Marketing estratégico" : "Strategic Marketing",
-      short: isEs 
-        ? "Posiciona a tu empresa como líder del sector al vincular tus metas comerciales con lo que tu público realmente busca." 
-        : "Position your company as an industry leader by linking your business goals with what your audience truly seeks.",
-      detail: isEs 
-        ? "Desarrollamos planes globales que fusionan la creatividad, la visión a futuro y el análisis riguroso para fomentar un avance constante.\n\nCada paso que damos busca cimentar vínculos a largo plazo y mejorar tu presencia en el mercado con resultados cuantificables." 
-        : "We develop global plans merging creativity, future vision, and rigorous analysis to foster constant progress.\n\nEvery step we take aims to build long-term relationships and improve your market presence with quantifiable results."
+      title: isEs ? "Desarrollo y Arquitectura Web" : "Web Architecture & Dev",
+      short: isEs ? "Escalabilidad construida en código moderno." : "Scalability built on modern code.",
+      detail: isEs ? "Construimos ecosistemas digitales desde la raíz usando stacks modernos (Next.js, Node, Python). Integramos bases de datos relacionales y NoSQL para garantizar flujos de información ininterrumpidos y alta disponibilidad." : "We build digital ecosystems from the root up using modern stacks. We integrate relational and NoSQL databases to guarantee uninterrupted info flows and high availability."
     },
     {
-      title: isEs ? "Publicidad y medios" : "Advertising & Media",
-      short: isEs 
-        ? "Fortalece el alcance de tu empresa y forja relaciones sólidas con tu público objetivo." 
-        : "Strengthen your company's reach and forge solid relationships with your target audience.",
-      detail: isEs 
-        ? "En una era altamente competitiva por captar la atención, te ayudamos a sobresalir mediante enfoques publicitarios que maximizan tu visibilidad en diversos canales.\n\nEvolucionamos la forma en que transmites tu mensaje para que te conviertas en una autoridad indiscutible dentro de tu industria." 
-        : "In an era highly competitive for attention, we help you stand out through advertising approaches that maximize your visibility across various channels.\n\nWe evolve the way you transmit your message so you become an indisputable authority within your industry."
+      title: isEs ? "Interfaces y Prototipado" : "UI/UX & Prototyping",
+      short: isEs ? "Diseño de interacciones centradas en el usuario." : "User-centric interaction design.",
+      detail: isEs ? "Traduciendo lógica compleja en vistas limpias. Empleamos sistemas de diseño y wireframing avanzado para validar cada flujo antes de escribir una sola línea de código, reduciendo la fricción visual." : "Translating complex logic into clean views. We use design systems and advanced wireframing to validate each flow before writing a single line of code."
     },
     {
-      title: isEs ? "Investigación de mercados" : "Market Research",
-      short: isEs 
-        ? "Halla nuevas vías de crecimiento y fundamenta tus elecciones corporativas en información verídica y actual." 
-        : "Find new growth paths and base your corporate choices on truthful and current information.",
-      detail: isEs 
-        ? "Estudiamos el comportamiento y las exigencias de tu mercado meta para brindarte datos estructurados, claros y útiles.\n\nEste respaldo analítico te permitirá trazar caminos más eficientes, aprovechar mejor tu inversión y lograr un éxito duradero." 
-        : "We study the behavior and demands of your target market to provide structured, clear, and useful data.\n\nThis analytical backing will allow you to chart more efficient paths, better leverage your investment, and achieve lasting success."
+      title: isEs ? "Inteligencia Predictiva" : "Predictive Intelligence",
+      short: isEs ? "Análisis de mercado basado en telemetría." : "Market analysis based on telemetry.",
+      detail: isEs ? "Dejamos atrás la especulación. Extraemos, estructuramos y analizamos el comportamiento de tu nicho para desplegar tácticas con alta probabilidad de conversión y retención." : "We leave speculation behind. We extract, structure, and analyze your niche's behavior to deploy tactics with a high probability of conversion."
     },
     {
-      title: isEs ? "Asesoría en Cumplimiento" : "Compliance Consulting",
-      short: isEs 
-        ? "Salvaguarda el prestigio de tu organización operando bajo el marco de la ley y previniendo cualquier tipo de sanción." 
-        : "Safeguard your organization's prestige by operating within the legal framework and preventing any type of sanction.",
-      detail: isEs 
-        ? "Brindamos consultoría completa en materia laboral, comercial y fiscal para asegurar tu alineación normativa.\n\nA través de la preparación técnica de tu personal y la ejecución de auditorías preventivas, garantizamos que tu negocio funcione con total claridad y seguridad jurídica." 
-        : "We provide complete consulting in labor, commercial, and tax matters to ensure your regulatory alignment.\n\nThrough the technical preparation of your staff and the execution of preventive audits, we guarantee that your business operates with total clarity and legal security."
-    },
-    {
-      title: isEs ? "Diseño y branding" : "Design & Branding",
-      short: isEs 
-        ? "Construye una imagen visual que transmita seguridad y sea completamente congruente con el valor de tu empresa." 
-        : "Build a visual image that conveys security and is completely consistent with your company's value.",
-      detail: isEs 
-        ? "Moldeamos identidades únicas que proyectan fielmente el carácter de tu negocio, cuidando desde la conceptualización hasta su aplicación gráfica.\n\nUna gestión de marca sólida es clave para que tu historia resuene, seas fácilmente identificable y te erijas como un modelo a seguir en el mercado." 
-        : "We shape unique identities that faithfully project the character of your business, taking care from conceptualization to graphic application.\n\nSolid brand management is key for your story to resonate, be easily identifiable, and stand as a benchmark in the market."
+      title: isEs ? "Cumplimiento y Seguridad" : "Compliance & Security",
+      short: isEs ? "Protocolos que protegen tu operación." : "Protocols that protect your operation.",
+      detail: isEs ? "Auditorías continuas y alineación con normativas vigentes. Fortalecemos las políticas internas de tu plataforma para mitigar vulnerabilidades y asegurar un entorno de trabajo resiliente." : "Continuous audits and alignment with current regulations. We strengthen your platform's internal policies to mitigate vulnerabilities."
     }
   ];
 
-  // METODOLOGÍA
   const processSteps = [
-    { title: isEs ? "Selección" : "Selection", text: isEs ? "Eliges el servicio que mejor se acople a tus necesidades." : "Choose the service that best fits your needs." },
-    { title: isEs ? "Contacto" : "Contact", text: isEs ? "Te comunicas con nosotros vía correo, formulario o teléfono." : "Contact us via email, form, or phone." },
-    { title: isEs ? "Planeación" : "Planning", text: isEs ? "Armamos tu plan de trabajo de manera personalizada." : "We build your personalized work plan." },
-    { title: isEs ? "Inversión" : "Investment", text: isEs ? "Realizas el pago de manera segura en nuestra página." : "Make secure payments on our page." },
-    { title: isEs ? "Ejecución" : "Execution", text: isEs ? "Entregamos el servicio en el tiempo establecido." : "We deliver the service on time." }
+    { num: "01", title: isEs ? "Requisitos" : "Requirements", text: isEs ? "Mapeo de arquitectura y necesidades técnicas." : "Architecture and tech needs mapping." },
+    { num: "02", title: isEs ? "Wireframe" : "Wireframe", text: isEs ? "Prototipado visual y flujos lógicos." : "Visual prototyping and logical flows." },
+    { num: "03", title: isEs ? "Commit" : "Commit", text: isEs ? "Despliegue del entorno de trabajo." : "Deployment of the working environment." },
+    { num: "04", title: isEs ? "Testing" : "Testing", text: isEs ? "Auditoría de calidad y aseguramiento." : "QA and security audits." },
+    { num: "05", title: isEs ? "Producción" : "Production", text: isEs ? "Lanzamiento y monitoreo continuo." : "Launch and continuous monitoring." }
   ];
 
   return (
-    <main className="bg-[#fafafa] min-h-screen font-sans text-slate-900">
-      
-      {/* 1. HERO SECTION */}
-      <section id="nosotros" className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
-        <div className="max-w-3xl">
-          <div className="inline-block border border-slate-200 bg-white px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-indigo-600 mb-8 shadow-sm">
-            {isEs ? 'Transformación Corporativa' : 'Corporate Transformation'}
+    <div className="w-full">
+      {/* 1. HERO SECTION (Tech-Oriented) */}
+      <section id="nosotros" className="relative pt-40 pb-32 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
+        {/* Glow Effects */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-sky-600/20 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-4xl relative z-10 flex flex-col items-center">
+          <div className="mb-6 flex items-center gap-2 border border-slate-800 bg-slate-900/50 backdrop-blur-md px-4 py-1.5 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+            <span className="text-[10px] font-mono tracking-widest text-slate-300 uppercase">
+              {isEs ? 'Sistema en línea v2.0' : 'System online v2.0'}
+            </span>
           </div>
-          <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] text-slate-900 mb-8">
-            {isEs ? 'Donde la' : 'Where'} <span className="text-indigo-600">{isEs ? 'estrategia' : 'strategy'}</span> <br/>
-            {isEs ? 'se encuentra con la' : 'meets'} <br/>
-            <span className="text-indigo-600">{isEs ? 'ejecución.' : 'execution.'}</span>
-          </h1>
-          <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl">
-            {isEs 
-              ? 'Fusionamos la planeación estratégica con la implementación práctica. Evitamos las fórmulas prefabricadas; en su lugar, analizamos a fondo el contexto de tu empresa para comprender tus metas, diseñar acciones personalizadas y lograr un impacto real y medible.' 
-              : 'We merge strategic planning with practical implementation. We avoid pre-made formulas; instead, we deeply analyze your company\'s context to understand your goals, design custom actions, and achieve real, measurable impact.'}
-          </p>
           
-          {/* Hero Quick-Reveal */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-slate-200 pt-8 mt-12">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-6 leading-tight">
+            {isEs ? 'Ingeniería de' : 'Growth'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">{isEs ? 'Crecimiento.' : 'Engineering.'}</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl font-light">
+            {isEs 
+              ? 'Arquitectamos ecosistemas digitales y operativos de alto rendimiento. Infraestructuras resilientes que detonan escalabilidad sin fricción.' 
+              : 'We architect high-performance digital and operational ecosystems. Resilient infrastructures that trigger frictionless scalability.'}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4 w-full max-w-3xl">
             {highlights.map((h, i) => (
-              <button 
-                key={i} 
-                onMouseEnter={() => setFeaturedIdx(i)}
-                className={`text-left transition-all p-4 rounded-xl ${featuredIdx === i ? 'bg-white shadow-md border border-slate-200 opacity-100' : 'opacity-50 hover:opacity-80'}`}
-              >
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 block mb-2">{h.label}</span>
-                <h4 className="text-sm font-bold text-slate-900 mb-2">{h.title}</h4>
-                <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed">{h.desc}</p>
-              </button>
+              <div key={i} className="flex-1 min-w-[200px] border border-slate-800 bg-slate-900/40 rounded-2xl p-4 flex flex-col items-start backdrop-blur-sm">
+                <Cpu className="w-5 h-5 text-sky-400 mb-3" />
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">{h.label}</span>
+                <span className="text-sm font-semibold text-slate-200">{h.title}</span>
+              </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* 2. SOLUCIONES INTEGRALES */}
-      <section id="soluciones" className="py-24 bg-white px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-4 block">
-              {isEs ? 'Nuestros Servicios' : 'Our Services'}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-              {isEs ? 'Soluciones que administran tu éxito.' : 'Solutions that manage your success.'}
+      {/* 2. MÓDULOS OPERATIVOS (Accordion Rediseñado a Paneles Tech) */}
+      <section id="soluciones" className="py-24 px-6 border-t border-slate-800/50 relative">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-16 flex flex-col items-start">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight flex items-center gap-3">
+              {isEs ? 'Módulos Operativos' : 'Operational Modules'}
             </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid gap-4">
             {services.map((service, idx) => (
-              <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden bg-[#fafafa] transition-all hover:border-indigo-200">
+              <div key={idx} className="group border border-slate-800 bg-slate-900/30 rounded-2xl overflow-hidden transition-all hover:bg-slate-900/60 hover:border-sky-900/50">
                 <button 
                   onClick={() => setActiveService(activeService === idx ? null : idx)}
-                  className="w-full text-left p-6 md:p-8 flex items-center justify-between focus:outline-none"
+                  className="w-full text-left p-6 flex items-center justify-between"
                 >
-                  <div>
-                    <h3 className={`text-2xl font-bold transition-colors ${activeService === idx ? 'text-indigo-600' : 'text-slate-900'}`}>
-                      {service.title}
-                    </h3>
-                    <p className="text-slate-500 mt-2 font-medium pr-8">{service.short}</p>
+                  <div className="flex items-center gap-6">
+                    <div className="text-slate-700 font-mono text-xl font-bold group-hover:text-sky-500/50 transition-colors">0{idx + 1}</div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-slate-200">{service.title}</h3>
+                      <p className="text-slate-500 text-sm mt-1">{service.short}</p>
+                    </div>
                   </div>
-                  <div className={`w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center transition-transform duration-300 shrink-0 ${activeService === idx ? 'rotate-180 bg-indigo-50 border-indigo-100' : ''}`}>
-                    <ChevronDown className={`w-5 h-5 ${activeService === idx ? 'text-indigo-600' : 'text-slate-400'}`} />
+                  <div className={`w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center transition-transform duration-500 ${activeService === idx ? 'rotate-45 border-sky-500/30 bg-sky-500/10 text-sky-400' : 'text-slate-400'}`}>
+                    <Plus className="w-4 h-4" />
                   </div>
                 </button>
                 <AnimatePresence>
@@ -192,12 +143,10 @@ export default function HomePage() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="p-6 md:p-8 pt-0 border-t border-slate-100">
-                        {service.detail.split('\n\n').map((para, pIdx) => (
-                          <p key={pIdx} className="text-slate-600 mb-4 leading-relaxed text-justify">
-                            {para}
-                          </p>
-                        ))}
+                      <div className="p-6 pt-0 ml-12 border-l border-slate-800">
+                        <p className="text-slate-400 leading-relaxed text-sm max-w-2xl">
+                          {service.detail}
+                        </p>
                       </div>
                     </motion.div>
                   )}
@@ -208,94 +157,134 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. METODOLOGÍA */}
-      <section id="metodo" className="py-24 bg-slate-900 text-white px-6">
+      {/* 3. PIPELINE DE TRABAJO */}
+      <section id="metodo" className="py-24 px-6 bg-slate-950 border-t border-slate-800/50">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <span className="text-indigo-400 font-bold tracking-widest uppercase text-sm mb-4 block">
-              {isEs ? 'Proceso' : 'Process'}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-              {isEs ? 'Cómo trabajamos:' : 'How we work:'}
+            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              {isEs ? 'Pipeline de Implementación' : 'Deployment Pipeline'}
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {processSteps.map((step, idx) => (
-              <div key={idx} className="relative">
-                <div className="text-indigo-500 font-bold text-5xl mb-4 opacity-50">0{idx + 1}.</div>
-                <h4 className="text-xl font-bold mb-3 text-white">{step.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">{step.text}</p>
+              <div key={idx} className="border border-slate-800 bg-[#020617] p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition-colors">
+                <div className="text-sky-500/20 font-mono text-4xl font-black absolute -bottom-2 -right-2 group-hover:scale-110 transition-transform">
+                  {step.num}
+                </div>
+                <h4 className="text-base font-bold text-slate-200 mb-2">{step.title}</h4>
+                <p className="text-slate-500 text-xs leading-relaxed relative z-10">{step.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. PROGRAMAS Y COMPRAS */}
-      <section id="programas" className="py-24 bg-[#fafafa] px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-4 block">
-              {isEs ? 'Programas' : 'Programs'}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight max-w-3xl mx-auto">
-              {isEs ? 'Conoce todos nuestros programas o comunícate con nosotros.' : 'Know all our programs or contact us.'}
+      {/* 4. INSTANCIAS (Planes) - REDISEÑO HORIZONTAL "SERVER RACK" (Traducido) */}
+      <section id="programas" className="py-32 px-6 relative border-t border-slate-800/50 bg-[#020617]">
+        {/* Decoración de fondo tech */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gradient-to-b from-sky-500/50 to-transparent"></div>
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-sky-400 font-mono text-[10px] uppercase tracking-widest mb-6">
+              <Server className="w-3 h-3" /> {isEs ? 'Nodos de Infraestructura' : 'Infrastructure Nodes'}
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">
+              {isEs ? 'Inicializa tu Entorno' : 'Initialize your Environment'}
             </h2>
+            <p className="text-slate-400">
+              {isEs ? 'Selecciona la capacidad y parámetros de tu despliegue.' : 'Select the capacity and parameters of your deployment.'}
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* RACK DE SERVIDORES (Planes Estándar) */}
+          <div className="flex flex-col gap-4">
             {standardPlans.map((plan) => {
               let parsedFeatures: string[] = [];
               try { parsedFeatures = typeof plan.features === 'string' ? JSON.parse(plan.features) : plan.features; } catch(e){}
 
               return (
-                <div key={plan.id} className="bg-white border border-slate-200 p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all flex flex-col">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-6 leading-tight">{plan.title}</h3>
-                  <div className="mb-8">
-                    <span className="text-3xl font-extrabold text-slate-900">{formatPrice(plan.price)}</span>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2">MXN + IVA</span>
+                <div key={plan.id} className="relative group flex flex-col lg:flex-row bg-slate-900/20 border border-slate-800 rounded-2xl hover:bg-slate-900/60 transition-all duration-300 overflow-hidden">
+                  
+                  {/* Indicador de Estado (Línea lateral neón) */}
+                  <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-800 group-hover:bg-sky-500 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.6)] transition-all duration-500"></div>
+
+                  {/* Bloque 1: Info Base */}
+                  <div className="w-full lg:w-[35%] p-6 lg:p-8 flex flex-col justify-center">
+                    <h3 className="text-lg font-bold text-slate-200 mb-4 font-mono flex items-center gap-2">
+                      <Terminal className="w-4 h-4 text-slate-500" />
+                      {/* Envuelto en ClientT para la traducción dinámica desde DB */}
+                      <ClientT>{plan.title}</ClientT>
+                    </h3>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl lg:text-4xl font-black text-white">{formatPrice(plan.price)}</span>
+                    </div>
+                    {/* Texto estático con ternario isEs */}
+                    <span className="text-[10px] font-mono text-slate-500 uppercase mt-1">
+                      {isEs ? 'MXN + IVA / Instancia' : 'MXN + VAT / Instance'}
+                    </span>
                   </div>
                   
-                  <ul className="space-y-4 mb-10 flex-1">
-                    {parsedFeatures.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-start gap-3 text-sm text-slate-600 font-medium">
-                        <CheckCircle2 className="w-5 h-5 text-indigo-500 shrink-0" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Bloque 2: Nodos/Features (Grid denso) */}
+                  <div className="w-full lg:w-[45%] p-6 lg:p-8 border-y lg:border-y-0 lg:border-l border-slate-800 flex flex-col justify-center bg-slate-950/30">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+                      {parsedFeatures.map((feat, fIdx) => (
+                        <li key={fIdx} className="flex items-start gap-2 text-xs text-slate-400">
+                          <div className="mt-1 w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors shrink-0" />
+                          <span className="leading-snug">
+                            {/* Envuelto en ClientT para la traducción dinámica desde DB */}
+                            <ClientT>{feat}</ClientT>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                  {/* Componente que conecta con el carrito */}
-                  <AddToCartButton planId={plan.id} />
+                  {/* Bloque 3: Acción */}
+                  <div className="w-full lg:w-[20%] p-6 lg:p-8 flex items-center justify-center lg:justify-end border-l-0 lg:border-l border-slate-800">
+                    <div className="w-full">
+                      <AddToCartButton planId={plan.id} />
+                    </div>
+                  </div>
+
                 </div>
               );
             })}
           </div>
 
-          {/* PLAN PERSONALIZADO */}
+          {/* CLÚSTER PERSONALIZADO (Enterprise) */}
           {customPlan && (
-            <div className="mt-12 bg-indigo-600 rounded-[2rem] p-10 md:p-14 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
-              <div className="max-w-2xl">
-                <h3 className="text-3xl md:text-4xl font-bold mb-4">{customPlan.title}</h3>
-                <p className="text-indigo-100 text-lg">
-                  {customPlan.description}
+            <div className="mt-6 relative border border-dashed border-slate-700 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-slate-900/40 rounded-2xl overflow-hidden p-8 lg:p-10 flex flex-col md:flex-row items-center justify-between gap-8 group hover:border-sky-500/50 transition-colors">
+              
+              <div className="max-w-xl relative z-10">
+                <div className="flex items-center gap-2 text-sky-400 mb-3 font-mono text-[10px] uppercase tracking-widest bg-sky-500/10 inline-block px-3 py-1 rounded-full">
+                  <Code2 className="w-3 h-3 inline pb-0.5" /> root@crovexa/enterprise
+                </div>
+                <h3 className="text-2xl font-black text-white mb-3">
+                  {/* Envuelto en ClientT */}
+                  <ClientT>{customPlan.title}</ClientT>
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  {/* Envuelto en ClientT */}
+                  <ClientT>{customPlan.description}</ClientT>
                 </p>
               </div>
-              <div className="w-full md:w-auto flex flex-col gap-4">
-                <Link href={`/${locale}/contact`} className="bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-center hover:bg-slate-50 transition-colors">
-                  {isEs ? 'Contactar Asesor' : 'Contact Advisor'}
+
+              <div className="w-full md:w-auto flex flex-col gap-3 relative z-10 shrink-0">
+                <Link href={`/${locale}/contact`} className="bg-white text-slate-950 px-6 py-3 rounded-lg font-bold text-xs text-center hover:bg-sky-50 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/5">
+                  {isEs ? 'Configurar Clúster' : 'Configure Cluster'} <ArrowUpRight className="w-4 h-4" />
                 </Link>
-                <Link href={`/${locale}/pricing`} className="bg-indigo-800 text-white border border-indigo-500 px-8 py-4 rounded-xl font-bold text-center hover:bg-indigo-900 transition-colors">
-                  {isEs ? 'Pagar Folio Asignado' : 'Pay Assigned Folio'}
+                <Link href={`/${locale}/pricing`} className="bg-transparent border border-slate-700 text-slate-300 px-6 py-3 rounded-lg font-mono text-xs text-center hover:bg-slate-800 hover:text-white transition-colors">
+                  {isEs ? '> Ejecutar Folio' : '> Execute Folio'}
                 </Link>
               </div>
             </div>
           )}
-
         </div>
       </section>
 
-    </main>
+
+    </div>
   );
 }

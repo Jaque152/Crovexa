@@ -6,75 +6,58 @@ export function HeroVisuals({ locale }: { locale: string }) {
   const isEs = locale === 'es';
 
   return (
-    <div className="relative w-full h-[600px] lg:h-[750px] hidden lg:block font-sans">
+    <div className="relative w-full h-[600px] lg:h-[700px] hidden lg:block font-sans">
       
-      {/* CUADRO PRINCIPAL EDITORIAL */}
+      {/* CUADRO PRINCIPAL TECH */}
       <motion.div
-        initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }}
-        animate={{ opacity: 1, clipPath: "inset(0 0 0 0)" }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-10 right-0 w-[85%] h-[75%] bg-[#EFECE6] overflow-hidden"
+        className="absolute top-10 right-0 w-[80%] h-[75%] rounded-3xl overflow-hidden border border-slate-800 bg-slate-900"
       >
-        {/* Imagen en escala de grises / Sepia suave */}
         <img 
-          src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1000&h=800&fit=crop" 
-          alt="Strategy Meeting" 
-          className="w-full h-full object-cover grayscale-[50%] contrast-125 opacity-90 transition-transform duration-[20s] hover:scale-110" 
+          src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1000&h=800&fit=crop" 
+          alt="Cyber/Tech server room or modern abstract" 
+          className="w-full h-full object-cover opacity-60 mix-blend-luminosity hover:scale-105 transition-transform duration-1000" 
         />
+        {/* Grid overlay para estilo Figma/Tech */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
       </motion.div>
 
-      {/* CUADRO SECUNDARIO (Superpuesto con borde blanco para efecto marco) */}
+      {/* TARJETA FLOTANTE TIPO FIGMA */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-0 left-0 w-[55%] h-[45%] border-8 border-[#FAF9F6] bg-[#1A1A1A] overflow-hidden shadow-2xl"
+        transition={{ duration: 1, delay: 0.4 }}
+        className="absolute bottom-12 left-0 w-[50%] h-[auto] rounded-2xl border border-slate-700 bg-slate-900/80 backdrop-blur-2xl overflow-hidden shadow-2xl p-6"
       >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-rose-500"></div>
+            <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+            <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+          </div>
+          <span className="text-[10px] text-slate-500 font-mono">sys.architecture.visualizer</span>
+        </div>
         <img 
-          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=600&fit=crop" 
-          alt="Creative process" 
-          className="w-full h-full object-cover grayscale transition-transform duration-700 hover:scale-105 opacity-80" 
+          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop" 
+          alt="Abstract geometric" 
+          className="w-full h-40 object-cover rounded-lg grayscale opacity-70" 
         />
       </motion.div>
 
-      {/* Texto 1: Elegante vertical a la derecha */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="absolute top-20 -right-8 origin-bottom-right -rotate-90 flex items-center gap-4"
-      >
-        <span className="w-12 h-[1px] bg-[#1A1A1A]"></span>
-        <p className="text-[#1A1A1A] uppercase tracking-[0.3em] text-[10px] font-bold">
-          {isEs ? 'Estrategias Dirigidas' : 'Targeted Strategies'}
-        </p>
-      </motion.div>
-
-      {/* Texto 2: Etiqueta minimalista sobre la imagen secundaria */}
+      {/* BADGE NEÓN */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.8 }}
-        className="absolute bottom-[40%] -left-8 bg-[#FAF9F6] px-6 py-3 shadow-sm border border-[#E5E5E5] flex items-center gap-4"
+        className="absolute bottom-[45%] -left-6 bg-slate-950 px-5 py-2.5 rounded-full shadow-[0_0_20px_rgba(56,189,248,0.2)] border border-sky-500/30 flex items-center gap-3"
       >
-        <span className="text-xl font-serif italic text-[#1A1A1A]">01.</span>
-        <p className="text-[#1A1A1A] uppercase tracking-widest text-[10px] font-bold">
-          {isEs ? 'Comunicación Disruptiva' : 'Disruptive Communication'}
+        <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+        <p className="text-sky-100 uppercase tracking-widest text-[10px] font-bold font-mono">
+          {isEs ? 'Sistemas Operativos' : 'Systems Operational'}
         </p>
       </motion.div>
-
-      {/* Texto 3: Detalle fino en la esquina superior izquierda de la imagen principal */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="absolute top-6 right-[80%] bg-[#1A1A1A] text-[#FAF9F6] px-4 py-2"
-      >
-        <p className="uppercase tracking-[0.2em] text-[9px] font-bold">
-          {isEs ? 'Eventos Estratégicos' : 'Strategic Events'}
-        </p>
-      </motion.div>
-
     </div>
   );
 }

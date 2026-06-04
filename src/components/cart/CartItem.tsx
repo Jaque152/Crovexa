@@ -13,8 +13,8 @@ export function CartItemComponent({ item }: { item: CartItem }) {
   const locale = useLocale();
   const isEs = locale === 'es';
 
-  // Usamos ar_plans en lugar de plans_nc
-  const price = item.custom_price !== null ? item.custom_price : (item.ar_plans?.price || 0);  
+  // Usamos crovexa_plans en lugar de plans_nc
+  const price = item.custom_price !== null ? item.custom_price : (item.crovexa_plans?.price || 0);  
   const formatPrice = (p: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(p);
 
   const handleUpdateQty = (newQty: number) => {
@@ -43,7 +43,7 @@ export function CartItemComponent({ item }: { item: CartItem }) {
       <div className="flex-1 flex flex-col justify-between">
         <div className="pr-6">
           <h4 className="font-bold text-lg text-[var(--text-main)] leading-tight tracking-tight">
-            {item.ar_plans?.title || (isEs ? 'Estrategia Personalizada' : 'Custom Strategy')}
+            {item.crovexa_plans?.title || (isEs ? 'Estrategia Personalizada' : 'Custom Strategy')}
           </h4>
           
           {item.quote_id && (

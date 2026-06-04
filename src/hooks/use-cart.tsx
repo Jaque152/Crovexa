@@ -38,8 +38,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (!sessionId) return;
 
     const { data, error } = await supabase
-      .from('ar_cart_items') // ACTUALIZADO
-      .select('*, ar_plans(*)') // ACTUALIZADO
+      .from('crovexa_cart_items') 
+      .select('*, crovexa_plans(*)') 
       .eq('session_id', sessionId) 
       .order('created_at', { ascending: false });
     
@@ -55,7 +55,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const sessionId = getSessionId();
     
     const { data, error } = await supabase
-      .from('ar_cart_items') // ACTUALIZADO
+      .from('crovexa_cart_items') 
       .insert({
         session_id: sessionId,
         plan_id: planId, // YA NO SE USA NUMBER
@@ -63,7 +63,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         custom_price: customPrice,
         quote_id: quoteId
       })
-      .select('*, ar_plans(*)')
+      .select('*, crovexa_plans(*)')
       .single();
 
     if (error || !data) {
@@ -78,7 +78,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const removeFromCart = useCallback(async (cartItemId: string) => {
     const { error } = await supabase
-      .from('ar_cart_items') // ACTUALIZADO
+      .from('crovexa_cart_items') 
       .delete()
       .eq('id', cartItemId);
 
@@ -102,7 +102,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return items.reduce((acc, item) => {
       const price = item.custom_price !== null 
         ? Number(item.custom_price) 
-        : Number(item.ar_plans?.price || 0);
+        : Number(item.crovexa_plans?.price || 0);
         
       return acc + (price * item.quantity);
     }, 0);

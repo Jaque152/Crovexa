@@ -18,8 +18,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Posiciona Marketing  ",
-  description: "A Posiciona Marketing agency focused on helping businesses grow with disruptive communication, strategic events, and targeted strategies.",
+  title: "Crovexa | Ecosistemas Digitales",
+  description: "Crovexa diseña e implementa arquitecturas de crecimiento empresarial a través de tecnología, interfaces modernas y estrategias de alta precisión.",
   icons: {
     icon: "/favicon.ico",
   },
@@ -35,13 +35,12 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   return (
-
-    <html lang={locale} className={`${playfair.variable} ${dmSans.variable} scroll-smooth`}>
-      <body className="bg-background text-foreground antialiased min-h-screen flex flex-col font-sans">
+    <html lang={locale} className={`${playfair.variable} ${dmSans.variable} scroll-smooth dark`}>
+      <body className="antialiased min-h-screen flex flex-col font-sans text-slate-50 bg-[#020617]">
         <NextIntlClientProvider locale={locale} messages={{}}>
           <ClientBody>
             <Navigation />
-            <main className="flex-grow">
+            <main className="flex-grow flex flex-col relative z-10">
               {children}
             </main>
             <Footer />

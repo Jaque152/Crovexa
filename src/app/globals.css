@@ -4,69 +4,56 @@
 
 @layer base {
   :root {
+    /* Paleta Crovexa: Negros profundos, Azules Marinos y Acentos Cyan/Neón */
+    --ar-bg: #020617; /* slate-950 */
+    --ar-primary: #38bdf8; /* sky-400 */
+    --ar-text-main: #f8fafc; /* slate-50 */
+    --ar-border: #1e293b; /* slate-800 */
 
-    --ar-bg: #fafafa;
-    --ar-primary: #4f46e5; 
-    --ar-text-main: #0f172a;
-    --ar-border: #e2e8f0;
-
-    /* ALIAS DE COMPATIBILIDAD (Esto hará que los botones aparezcan) */
-    --accent-dark: var(--ar-primary);
-    --accent-cyan: var(--ar-primary);
-    --accent-purple: #6366f1;
-    --accent-magenta: #818cf8;
+    --accent-dark: #0f172a; /* slate-900 */
+    --accent-cyan: #22d3ee; /* cyan-400 */
+    --accent-purple: #818cf8; /* indigo-400 */
+    --accent-magenta: #c084fc; /* purple-400 */
     --text-main: var(--ar-text-main);
     
-    /* Variables Shadcn */
-    --background: 0 0% 98%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 243.4 75.4% 58.6%;
-    --radius: 0.75rem;
-}
-
-  .dark {
+    /* Variables Shadcn adaptadas a Dark Mode Nativo */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 243.4 75.4% 58.6%;
+    --primary: 199 89% 48%; /* Cyan-ish */
     --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 243.4 75.4% 58.6%;
+    --radius: 1rem; /* Bordes más redondeados para un look moderno */
   }
 }
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem; 
+    scroll-padding-top: 8rem; 
+    background-color: var(--ar-bg);
   }
-}
-@layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-[#020617] text-slate-50 antialiased selection:bg-sky-500/30 selection:text-sky-200;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(circle at 50% 0%, #0f172a 0%, transparent 70%);
   }
   
-  /* Ocultar barra de desplazamiento para secciones limpias */
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;
   }
   .scrollbar-hidden {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+  
+  /* Utilidad para paneles de cristal oscuro */
+  .glass-panel-dark {
+    @apply bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 shadow-2xl;
   }
 }

@@ -1,9 +1,9 @@
 -- =======================================================
--- 1. CREACIÓN DE TABLAS (ECOSISTEMA ACTVREACH "ar_")
+-- 1. CREACIÓN DE TABLAS (ECOSISTEMA ACTVREACH "crovexa_")
 -- =======================================================
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS ar_plans (
+CREATE TABLE IF NOT EXISTS crovexa_plans (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
     description TEXT,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS ar_plans (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
-CREATE TABLE IF NOT EXISTS ar_orders (
+CREATE TABLE IF NOT EXISTS crovexa_orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     nombre TEXT NOT NULL,
     apellidos TEXT NOT NULL,
@@ -31,26 +31,26 @@ CREATE TABLE IF NOT EXISTS ar_orders (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
-CREATE TABLE IF NOT EXISTS ar_order_items (
+CREATE TABLE IF NOT EXISTS crovexa_order_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    order_id UUID REFERENCES ar_orders(id) ON DELETE CASCADE,
-    plan_id UUID REFERENCES ar_plans(id),
+    order_id UUID REFERENCES crovexa_orders(id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES crovexa_plans(id),
     quantity INT NOT NULL,
     custom_price NUMERIC(10, 2),
     quote_id TEXT
 );
 
-CREATE TABLE IF NOT EXISTS ar_cart_items (
+CREATE TABLE IF NOT EXISTS crovexa_cart_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     session_id TEXT NOT NULL,
-    plan_id UUID REFERENCES ar_plans(id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES crovexa_plans(id) ON DELETE CASCADE,
     quantity INT NOT NULL DEFAULT 1,
     custom_price NUMERIC(10, 2),
     quote_id TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
-CREATE TABLE IF NOT EXISTS ar_custom_quotes (
+CREATE TABLE IF NOT EXISTS crovexa_custom_quotes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     nombre TEXT NOT NULL,
     apellidos TEXT NOT NULL,
@@ -64,22 +64,22 @@ CREATE TABLE IF NOT EXISTS ar_custom_quotes (
 -- =======================================================
 -- 2. REGLAS DE SEGURIDAD (RLS)
 -- =======================================================
-ALTER TABLE ar_plans ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ar_orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ar_order_items ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ar_cart_items ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ar_custom_quotes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE crovexa_plans ENABLE ROW LEVEL SECURITY;
+ALTER TABLE crovexa_orders ENABLE ROW LEVEL SECURITY;
+ALTER TABLE crovexa_order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE crovexa_cart_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE crovexa_custom_quotes ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Lectura publica planes AR" ON ar_plans FOR SELECT USING (is_active = true);
-CREATE POLICY "Insertar ordenes AR" ON ar_orders FOR INSERT WITH CHECK (true);
-CREATE POLICY "Insertar items orden AR" ON ar_order_items FOR INSERT WITH CHECK (true);
-CREATE POLICY "Acceso carrito AR" ON ar_cart_items FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Insertar cotizaciones AR" ON ar_custom_quotes FOR INSERT WITH CHECK (true);
+CREATE POLICY "Lectura publica planes AR" ON crovexa_plans FOR SELECT USING (is_active = true);
+CREATE POLICY "Insertar ordenes AR" ON crovexa_orders FOR INSERT WITH CHECK (true);
+CREATE POLICY "Insertar items orden AR" ON crovexa_order_items FOR INSERT WITH CHECK (true);
+CREATE POLICY "Acceso carrito AR" ON crovexa_cart_items FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Insertar cotizaciones AR" ON crovexa_custom_quotes FOR INSERT WITH CHECK (true);
 
 -- =======================================================
 -- 3. INSERCIÓN DE LOS PROGRAMAS EXACTOS DE LAS IMÁGENES
 -- =======================================================
-INSERT INTO ar_plans (title, description, price, features) VALUES
+INSERT INTO crovexa_plans (title, description, price, features) VALUES
 ('Gestión de Campaña Multicanal Premium', '', 25000.00, '["Planeación y ejecución en redes, email, y Google Ads", "Producción de 2 videos cortos y gráficas", "Reporte detallado + ROI estimado"]'::jsonb),
 ('Capacitación en Marketing Digital', '', 5000.00, '["Taller de 1 hora en línea", "Enfocado en redes sociales y contenido", "Material descargable incluido"]'::jsonb),
 ('Estudio de Mercado Local (MiPyME)', '', 18000.00, '["2 focus groups", "Encuesta cuantitativa (hasta 100 encuestas)", "Reporte ejecutivo + presentación"]'::jsonb),

@@ -16,7 +16,7 @@ export async function processCustomPlan(formData: CustomPlanFormData) {
 
     // 1. Buscamos el plan base de manera robusta (acepta cualquiera de los dos nombres)
     const { data: planData, error: planError } = await supabase
-      .from('ar_plans')
+      .from('crovexa_plans')
       .select('id')
       .or('title.ilike.%Custom Garage%,title.ilike.%personalizado%')
       .limit(1)
@@ -29,7 +29,7 @@ export async function processCustomPlan(formData: CustomPlanFormData) {
 
     // 2. Insertamos la cotización en la tabla recién creada
     const { error: insertError } = await supabase
-      .from('ar_custom_quotes')
+      .from('crovexa_custom_quotes')
       .insert({
         nombre: formData.nombre,
         apellidos: formData.apellidos,
@@ -40,7 +40,7 @@ export async function processCustomPlan(formData: CustomPlanFormData) {
       });
 
     if (insertError) {
-      console.error("[CRÍTICO] Error al guardar cotización en ar_custom_quotes:", insertError);
+      console.error("[CRÍTICO] Error al guardar cotización en crovexa_custom_quotes:", insertError);
       throw new Error("Ocurrió un error al registrar la cotización en el servidor.");
     }
 

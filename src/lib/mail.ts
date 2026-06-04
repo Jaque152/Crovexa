@@ -66,10 +66,10 @@ export async function sendReceiptEmail(
               ${items.map(item => `
                 <tr style="border-bottom: 1px solid ${emailTheme.borderLight};">
                   <td style="padding: 15px 0; color: ${emailTheme.textMain}; font-size: 14px; font-weight: 600;">
-                    ${item.ar_plans?.title || 'Programa Personalizado'}
+                    ${item.crovexa_plans?.title || 'Programa Personalizado'}
                     ${item.quote_id ? `<br><span style="font-size:12px; color:${emailTheme.textMuted}; font-weight: normal;">Folio: ${item.quote_id}</span>` : ''}
                   </td>
-                  <td style="padding: 15px 0; text-align: right; color: ${emailTheme.textMain}; font-size: 14px; font-weight: bold;">${formatPrice(item.custom_price || item.ar_plans?.price || 0)}</td>
+                  <td style="padding: 15px 0; text-align: right; color: ${emailTheme.textMain}; font-size: 14px; font-weight: bold;">${formatPrice(item.custom_price || item.crovexa_plans?.price || 0)}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -101,8 +101,8 @@ export async function sendReceiptEmail(
       <ul style="color: #0f172a; padding-left: 20px;">
         ${items.map(item => `
           <li style="margin-bottom: 8px;">
-            ${item.quantity}x <strong>${item.ar_plans?.title || 'Programa Personalizado'}</strong> 
-            - ${formatPrice(item.custom_price || item.ar_plans?.price || 0)}
+            ${item.quantity}x <strong>${item.crovexa_plans?.title || 'Programa Personalizado'}</strong> 
+            - ${formatPrice(item.custom_price || item.crovexa_plans?.price || 0)}
           </li>
         `).join('')}
       </ul>
