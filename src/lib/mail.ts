@@ -40,11 +40,9 @@ export async function sendReceiptEmail(
         
         <div style="padding: 40px 30px; text-align: center; border-bottom: 1px solid ${emailTheme.borderLight};">
           <h1 style="margin: 0; font-size: 28px; font-weight: 900; letter-spacing: -1px; color: ${emailTheme.textMain};">
-            ACTV<span style="color: ${emailTheme.primary};">REACH</span>
+            Crovexa<span style="color: ${emailTheme.primary};"></span>
           </h1>
-          <p style="color: ${emailTheme.primary}; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; font-weight: bold;">
-            ${isEnglish ? 'Corporate Transformation' : 'Transformación Corporativa'}
-          </p>
+
         </div>
 
         <div style="padding: 40px 30px;">
@@ -157,7 +155,7 @@ export async function sendContactConfirmationEmail(data: ContactFormData, isEngl
         
         <div style="padding: 40px 30px; text-align: center; border-bottom: 1px solid ${emailTheme.borderLight};">
           <h1 style="margin: 0; font-size: 28px; font-weight: 900; letter-spacing: -1px; color: ${emailTheme.textMain};">
-            ACTV<span style="color: ${emailTheme.primary};">REACH</span>
+            Crovexa<span style="color: ${emailTheme.primary};"></span>
           </h1>
         </div>
         

@@ -10,9 +10,10 @@ export function Footer() {
 
   const sections = {
     empresa: [
-      { name: isEs ? "Núcleo" : "Core", href: `/${locale}/#nosotros` },
+      { name: isEs ? "Arquitectura" : "Architecture", href: `/${locale}/#nosotros` },
       { name: isEs ? "Módulos" : "Modules", href: `/${locale}/#soluciones` },
       { name: isEs ? "Framework" : "Framework", href: `/${locale}/#metodo` },
+      { name: isEs ? "Despliegue":"Deploy", href: `/${locale}/#programas` },
     ],
     legal: [
       { name: isEs ? "Privacidad de Datos" : "Data Privacy", href: `/${locale}/legal/privacy` },
@@ -70,7 +71,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Terminal className="w-4 h-4 text-sky-500 shrink-0" />
-                <span className="text-xs font-mono">root@crovexa.com</span>
+                <span className="text-xs font-mono">informes@crovexa.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-sky-500 shrink-0" />

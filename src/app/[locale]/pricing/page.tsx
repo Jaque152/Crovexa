@@ -67,7 +67,8 @@ export default function CustomPricingPage() {
     }
   };
 
-  const inputClass = "h-14 bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-purple)] rounded-xl px-5 text-[var(--text-main)] placeholder:text-[var(--text-main)]/40 font-medium transition-all shadow-sm w-full";
+  // Se corrigió el placeholder separando el color de la opacidad (70%)
+  const inputClass = "h-14 bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-purple)] rounded-xl px-5 text-[var(--text-main)] placeholder:text-[var(--text-main)] placeholder:opacity-70 font-medium transition-all shadow-sm w-full";
 
   return (
     <main className="min-h-screen bg-mesh pt-32 pb-24 text-[var(--text-main)] relative">
@@ -169,4 +170,4 @@ export default function CustomPricingPage() {
       </div>
     </main>
   );
-} 
+}

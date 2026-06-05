@@ -50,7 +50,8 @@ export default function ContactPage() {
     setIsSubmitting(false);
   };
 
-  const inputClass = "h-14 bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)] rounded-xl px-5 text-[var(--text-main)] placeholder:text-[var(--text-main)]/40 font-medium transition-all shadow-sm w-full";
+  // Se corrigió el placeholder separando el color de la opacidad (70%)
+  const inputClass = "h-14 bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)] rounded-xl px-5 text-[var(--text-main)] placeholder:text-[var(--text-main)] placeholder:opacity-70 font-medium transition-all shadow-sm w-full";
 
   if (showSuccess) {
     return (
@@ -127,8 +128,8 @@ export default function ContactPage() {
               {isEs ? 'Digital Mail' : 'Digital Mail'}
             </h3>
             <p className="text-[var(--text-main)]/60 text-sm font-medium">
-              <a href="contacto@posicionamkt.com" className="hover:text-[var(--accent-purple)] transition-colors">
-                contacto@posicionamkt.com
+              <a href="informes@crovexa.com" className="hover:text-[var(--accent-purple)] transition-colors">
+                informes@crovexa.com
               </a>
             </p>
           </div>
@@ -150,7 +151,8 @@ export default function ContactPage() {
             required 
             value={formData.mensaje} 
             onChange={(e)=>setFormData({...formData, mensaje:e.target.value})} 
-            className="w-full min-h-[150px] bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)] rounded-xl p-5 text-[var(--text-main)] placeholder:text-[var(--text-main)]/40 font-medium transition-all shadow-sm resize-y" 
+            /* Se corrigió el placeholder en el textarea */
+            className="w-full min-h-[150px] bg-white/50 backdrop-blur-sm border border-white focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)] rounded-xl p-5 text-[var(--text-main)] placeholder:text-[var(--text-main)] placeholder:opacity-70 font-medium transition-all shadow-sm resize-y" 
           />
           <Button type="submit" disabled={isSubmitting} className="w-full bg-[var(--accent-dark)] hover:scale-105 text-white font-bold h-14 rounded-xl text-lg shadow-xl transition-all">
             {isSubmitting ? <Loader2 className="animate-spin w-5 h-5 mx-auto" /> : <span className="flex items-center gap-2"><Send className="w-5 h-5"/> {isEs ? 'Enviar Mensaje' : 'Send Message'}</span>}

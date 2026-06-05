@@ -259,7 +259,7 @@ export default function HomePage() {
               
               <div className="max-w-xl relative z-10">
                 <div className="flex items-center gap-2 text-sky-400 mb-3 font-mono text-[10px] uppercase tracking-widest bg-sky-500/10 inline-block px-3 py-1 rounded-full">
-                  <Code2 className="w-3 h-3 inline pb-0.5" /> root@crovexa/enterprise
+                  <Code2 className="w-3 h-3 inline pb-0.5" /> informes@crovexa.com
                 </div>
                 <h3 className="text-2xl font-black text-white mb-3">
                   {/* Envuelto en ClientT */}
@@ -273,10 +273,10 @@ export default function HomePage() {
 
               <div className="w-full md:w-auto flex flex-col gap-3 relative z-10 shrink-0">
                 <Link href={`/${locale}/contact`} className="bg-white text-slate-950 px-6 py-3 rounded-lg font-bold text-xs text-center hover:bg-sky-50 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/5">
-                  {isEs ? 'Configurar Clúster' : 'Configure Cluster'} <ArrowUpRight className="w-4 h-4" />
+                  {isEs ? 'Contactar' : 'Contact'} <ArrowUpRight className="w-4 h-4" />
                 </Link>
                 <Link href={`/${locale}/pricing`} className="bg-transparent border border-slate-700 text-slate-300 px-6 py-3 rounded-lg font-mono text-xs text-center hover:bg-slate-800 hover:text-white transition-colors">
-                  {isEs ? '> Ejecutar Folio' : '> Execute Folio'}
+                  {isEs ? '> Pagar Folio' : '> Pay Folio'}
                 </Link>
               </div>
             </div>

@@ -51,7 +51,7 @@ export async function processCheckout(formData: CheckoutPayload) {
     const ETOMIN_BASE_URL = requireEnvVar('ETOMIN_BASE_URL');
     const ETOMIN_EMAIL = requireEnvVar('ETOMIN_EMAIL');
     const ETOMIN_PASSWORD = requireEnvVar('ETOMIN_PASSWORD');
-    const NEXT_PUBLIC_APP_URL = requireEnvVar('NEXT_PUBLIC_APP_URL');
+    
 
     // 1. LOGIN EN ETOMIN
     const signinData = await safeEtominFetch(`${ETOMIN_BASE_URL}/signin`, {
@@ -108,8 +108,6 @@ export async function processCheckout(formData: CheckoutPayload) {
         quantity: i.quantity,
         id: i.plan_id.toString() 
       })),
-      // Parámetro de redirección requerido por ETOMIN
-      redirectUrl: `${NEXT_PUBLIC_APP_URL}/checkout/callback`
     };
 
     const saleData = await safeEtominFetch(`${ETOMIN_BASE_URL}/sale`, {

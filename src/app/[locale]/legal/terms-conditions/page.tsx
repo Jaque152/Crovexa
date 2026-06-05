@@ -9,11 +9,11 @@ export default function TermsConditionsPage() {
           </h1>
           
           <div className="space-y-6 text-slate-600 leading-relaxed font-medium">
-            <p>Los presentes Términos y Condiciones establecen las normas que regulan el acceso, uso y contratación de servicios a través de posicionamkt.com (en lo sucesivo, “POSICIONA MKT”), propiedad de SEVEN MARKETING DIGITAL, S.A. DE C.V. (en adelante, “la Empresa”), con domicilio en Avenida Insurgentes Sur, N°933, INT 102 Piso 1, Colonia Nápoles, Alcaldía Benito Juárez, C.P. 03810, Ciudad de México. {/* [cite: 259, 260, 261] */}</p>
-            <p>Dichas disposiciones son aplicables a cualquier persona que acceda, navegue y/o contrate los servicios ofrecidos en POSICIONA MKT (en adelante, “el Usuario”). El acceso, uso y/o adquisición de servicios implica la lectura previa, comprensión y aceptación expresa y sin reservas del contenido íntegro de este documento. {/* [cite: 261, 262] */}</p>
+            <p>Los presentes Términos y Condiciones establecen las normas que regulan el acceso, uso y contratación de servicios a través de crovexa.com (en lo sucesivo, “Crovexa”), propiedad de SEVEN MARKETING DIGITAL, S.A. DE C.V. (en adelante, “la Empresa”), con domicilio en Avenida Insurgentes Sur, N°933, INT 102 Piso 1, Colonia Nápoles, Alcaldía Benito Juárez, C.P. 03810, Ciudad de México. {/* [cite: 259, 260, 261] */}</p>
+            <p>Dichas disposiciones son aplicables a cualquier persona que acceda, navegue y/o contrate los servicios ofrecidos en Crovexa (en adelante, “el Usuario”). El acceso, uso y/o adquisición de servicios implica la lectura previa, comprensión y aceptación expresa y sin reservas del contenido íntegro de este documento. {/* [cite: 261, 262] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">I. Objeto</h2>
-            <p>El presente documento tiene por finalidad regular las condiciones bajo las cuales la Empresa pone a disposición del Usuario POSICIONA MKT y los servicios que en él se ofrecen. El acceso al sitio no implica, por sí mismo, la existencia de una relación contractual entre la Empresa y el Usuario, salvo que este último formalice la contratación de un servicio. {/* [cite: 265, 266] */}</p>
+            <p>El presente documento tiene por finalidad regular las condiciones bajo las cuales la Empresa pone a disposición del Usuario Crovexa y los servicios que en él se ofrecen. El acceso al sitio no implica, por sí mismo, la existencia de una relación contractual entre la Empresa y el Usuario, salvo que este último formalice la contratación de un servicio. {/* [cite: 265, 266] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">II. Condiciones de acceso</h2>
             <ul className="list-disc pl-6 space-y-2">
@@ -31,21 +31,21 @@ export default function TermsConditionsPage() {
             <p>La Empresa no almacenará datos completos de tarjetas bancarias, ya que el procesamiento se realiza a través de proveedores externos certificados que cumplen con los estándares de seguridad PCI DSS. {/* [cite: 278] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">V. Uso permitido del sitio</h2>
-            <p>El Usuario se compromete a utilizar POSICIONA MKT y todo su contenido de forma lícita. Queda estrictamente prohibido: {/* [cite: 281, 282] */}</p>
+            <p>El Usuario se compromete a utilizar Crovexa y todo su contenido de forma lícita. Queda estrictamente prohibido: {/* [cite: 281, 282] */}</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Alterar o modificar, total o parcialmente, POSICIONA MKT sin la autorización de la Empresa. {/* [cite: 283] */}</li>
+              <li>Alterar o modificar, total o parcialmente, Crovexa sin la autorización de la Empresa. {/* [cite: 283] */}</li>
               <li>Introducir virus, malware o cualquier código malicioso. {/* [cite: 284] */}</li>
               <li>Utilizar los contenidos del sitio con fines comerciales no autorizados. {/* [cite: 285] */}</li>
             </ul>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">VI. Propiedad intelectual</h2>
-            <p>Todos los elementos de POSICIONA MKT, incluyendo textos, imágenes, logotipos, código fuente y demás materiales, son propiedad exclusiva de la Empresa o de terceros licenciantes. El Usuario no adquiere derecho alguno sobre dichos elementos. {/* [cite: 287, 288] */}</p>
+            <p>Todos los elementos de Crovexa, incluyendo textos, imágenes, logotipos, código fuente y demás materiales, son propiedad exclusiva de la Empresa o de terceros licenciantes. El Usuario no adquiere derecho alguno sobre dichos elementos. {/* [cite: 287, 288] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">VII. Limitación de responsabilidad</h2>
             <p>La Empresa realizará sus mejores esfuerzos para mantener el funcionamiento continuo y seguro del sitio, pero no garantiza la ausencia de interrupciones. El Usuario acepta que el uso del sitio se realiza bajo su propia responsabilidad. {/* [cite: 290, 291] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">VIII. Cancelaciones y reembolsos</h2>
-            <p>Las solicitudes de cancelación y/o reembolso se regirán por lo establecido en la Política de Reembolsos y Devoluciones disponible en POSICIONA MKT. {/* [cite: 293] */}</p>
+            <p>Las solicitudes de cancelación y/o reembolso se regirán por lo establecido en la Política de Reembolsos y Devoluciones disponible en Crovexa. {/* [cite: 293] */}</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">IX. Jurisdicción y ley aplicable</h2>
             <p>El presente documento se rige por las leyes de los Estados Unidos Mexicanos. Para la interpretación y cumplimiento de lo aquí dispuesto, las partes se someten expresamente a la jurisdicción de los tribunales competentes de la Ciudad de México. {/* [cite: 295, 296] */}</p>
