@@ -61,6 +61,7 @@ export function Navigation() {
         </div>
 
         <div className="flex items-center gap-4">
+          {/* TRADUCTOR DESKTOP (Oculto en móvil) */}
           <div className="hidden sm:flex items-center gap-1 bg-slate-900/50 p-1 rounded-full border border-slate-800">
             <Globe className="w-3.5 h-3.5 text-slate-400 ml-2" />
             <button onClick={() => switchLocale('es')} className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all ${locale === 'es' ? 'bg-sky-500 text-white' : 'text-slate-400'}`}>ES</button>
@@ -87,6 +88,7 @@ export function Navigation() {
         </div>
       </div>
 
+      {/* MENÚ MÓVIL */}
       {isMenuOpen && (
         <div className="md:hidden mt-4 mx-2 glass-panel-dark rounded-2xl animate-in slide-in-from-top-4">
           <div className="flex flex-col p-6 gap-4">
@@ -95,6 +97,19 @@ export function Navigation() {
                 {link.name}
               </Link>
             ))}
+            
+            {/* TRADUCTOR MÓVIL (Nuevo) */}
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                <Globe className="w-4 h-4 text-slate-400" />
+                {isEs ? 'Idioma' : 'Language'}
+              </span>
+              <div className="flex items-center gap-1 bg-slate-900/80 p-1 rounded-full border border-slate-700">
+                <button onClick={() => switchLocale('es')} className={`px-4 py-1.5 text-[10px] font-bold rounded-full transition-all ${locale === 'es' ? 'bg-sky-500 text-white' : 'text-slate-400'}`}>ES</button>
+                <button onClick={() => switchLocale('en')} className={`px-4 py-1.5 text-[10px] font-bold rounded-full transition-all ${locale === 'en' ? 'bg-sky-500 text-white' : 'text-slate-400'}`}>EN</button>
+              </div>
+            </div>
+
             <Link href={`/${locale}/contact`} onClick={() => setIsMenuOpen(false)} className="text-sm font-bold text-sky-400 flex items-center gap-2 pt-2">
               <Terminal className="w-4 h-4" /> {isEs ? 'Inicializar Proyecto' : 'Initialize Project'}
             </Link>

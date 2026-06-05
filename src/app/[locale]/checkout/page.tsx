@@ -131,7 +131,7 @@ export default function CheckoutContent() {
                     </div>
                     {isEs ? 'Método de Pago Seguro' : 'Secure Payment Method'}
                   </h2>
-                  <img src="/etomin_logo.svg" alt="Etomin" className="h-6 opacity-60 mix-blend-multiply" />
+                  <img src="/etomin_logo.svg" alt="Etomin" className="h-8 bg-white/90 px-3 py-1.5 rounded-lg shadow-sm" />
                 </div>
                 <div className="grid gap-5 max-w-md">
                   <Input placeholder={isEs ? "Número de tarjeta *" : "Card number *"} required maxLength={19} value={cardInfo.number} onChange={(e)=>setCardInfo({...cardInfo, number: e.target.value.replace(/\D/g, '')})} className={inputClass + " font-mono tracking-widest text-lg"} />
