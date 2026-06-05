@@ -4,8 +4,8 @@ import { Checkout, CartItem } from '@/types';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 
-const FROM_EMAIL = 'soporte@posicionamkt.com'; 
-const INTERNAL_EMAIL = 'contacto@posicionamkt.com';
+const FROM_EMAIL = 'informes@crovexa.com'; 
+const INTERNAL_EMAIL = 'contacto@crovexa.com';
 
 const formatPrice = (price: number) => 
   new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
@@ -30,8 +30,8 @@ export async function sendReceiptEmail(
 ) {
   // --- A. PLANTILLA CORPORATIVA PARA EL CLIENTE ---
   const subjectClient = isEnglish 
-    ? `Order Confirmation - Welcome to Posiciona Marketing` 
-    : `Confirmación de Orden - Bienvenido a Posiciona Marketing`;
+    ? `Order Confirmation - Welcome to Crovexa` 
+    : `Confirmación de Orden - Bienvenido a Crovexa`;
 
   const htmlClient = `
     <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; background-color: ${emailTheme.bgMain}; padding: 40px 20px;">
@@ -87,7 +87,7 @@ export async function sendReceiptEmail(
   // --- B. PLANTILLA PARA EL EQUIPO INTERNO ---
   const htmlInternal = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
-      <h2 style="color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">💳 Nueva Compra Aprobada - Posiciona Marketing</h2>
+      <h2 style="color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">💳 Nueva Compra Aprobada - Crovexa</h2>
       <p style="color: #64748b;"><strong>ID Transacción:</strong> ${checkout.id}</p>
       
       <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
@@ -117,7 +117,7 @@ export async function sendReceiptEmail(
 
   await Promise.all([
     resend.emails.send({
-      from: `Posiciona Marketing <${FROM_EMAIL}>`,
+      from: `Crovexa <${FROM_EMAIL}>`,
       to: [checkout.correo_electronico],
       subject: subjectClient,
       html: htmlClient,
@@ -147,8 +147,8 @@ export async function sendContactConfirmationEmail(data: ContactFormData, isEngl
   
   // --- A. PLANTILLA CORPORATIVA PARA EL CLIENTE ---
   const subjectClient = isEnglish 
-    ? "We have received your message - Posiciona Marketing" 
-    : "Hemos recibido tu mensaje - Posiciona Marketing";
+    ? "We have received your message - Crovexa" 
+    : "Hemos recibido tu mensaje - Crovexa";
   
   const htmlClient = `
     <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; background-color: ${emailTheme.bgMain}; padding: 40px 20px;">
@@ -183,7 +183,7 @@ export async function sendContactConfirmationEmail(data: ContactFormData, isEngl
   // --- B. PLANTILLA PARA EL EQUIPO INTERNO ---
   const htmlInternal = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
-      <h2 style="color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">📋 Nuevo Lead de Contacto - Posiciona Marketing</h2>
+      <h2 style="color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">📋 Nuevo Lead de Contacto - Crovexa</h2>
       
       <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; width: 30%; color: #64748b;"><strong>Nombre:</strong></td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #0f172a;">${data.nombre_completo}</td></tr>
@@ -201,7 +201,7 @@ export async function sendContactConfirmationEmail(data: ContactFormData, isEngl
 
   await Promise.all([
     resend.emails.send({
-      from: `Posiciona Marketing <${FROM_EMAIL}>`,
+      from: `Crovexa <${FROM_EMAIL}>`,
       to: [data.correo_electronico],
       subject: subjectClient,
       html: htmlClient,

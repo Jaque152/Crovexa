@@ -5,11 +5,11 @@ export async function POST(req: Request) {
     const body = await req.json();
     
 
-    console.log("Notificación de Octano recibida:", body);
+    console.log("Notificación de Etomin recibida:", body);
 
     return NextResponse.json({ success: true, message: "Webhook recibido" }, { status: 200 });
   } catch (error) {
-    console.error("Error en webhook de Octano:", error);
+    console.error("Error en webhook de Etomin:", error);
     return NextResponse.json({ success: false, message: "Error interno" }, { status: 500 });
   }
 }

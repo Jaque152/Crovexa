@@ -1,4 +1,4 @@
-# Posiciona Marketing 
+# Crovexa 
 
 ## Completed
 - [x] Created warm luxurious color palette (copper, amber, cream)
