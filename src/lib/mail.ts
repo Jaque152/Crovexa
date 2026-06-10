@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 const FROM_EMAIL = 'informes@crovexa.com'; 
-const INTERNAL_EMAIL = 'contacto@crovexa.com';
+const INTERNAL_EMAIL = 'informes@crovexa.com';
 
 const formatPrice = (price: number) => 
   new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);

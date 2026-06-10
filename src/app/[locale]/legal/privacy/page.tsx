@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             <p>En ningún caso CROVEXA venderá, alquilará o comercializará los datos personales a terceros ajenos a las finalidades aquí descritas.</p>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">4. Derechos ARCO y medios para ejercerlos</h2>
-            <p>El titular podrá ejercer en cualquier momento sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO), así como limitar el uso o revocar el consentimiento previamente otorgado. Para ello, deberá enviar una solicitud a informes@CROVEXA.com, la cual deberá contener:</p>
+            <p>El titular podrá ejercer en cualquier momento sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO), así como limitar el uso o revocar el consentimiento previamente otorgado. Para ello, deberá enviar una solicitud a informes@crovexa.com, la cual deberá contener:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Nombre completo del titular y un medio para recibir respuesta.</li>
               <li>Descripción clara y precisa de los datos sobre los que se pretende ejercer derechos.</li>

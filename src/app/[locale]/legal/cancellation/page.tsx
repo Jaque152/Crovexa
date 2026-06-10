@@ -32,7 +32,7 @@ export default function RefundPolicyPage() {
             </ul>
 
             <h2 className="text-2xl font-bold text-slate-900 mt-8">4. Plazo para solicitar reembolso</h2>
-            <p>El Usuario deberá presentar su solicitud de reembolso en un plazo máximo de cinco (5) días hábiles contados a partir de la fecha de confirmación de la compra, enviando un correo electrónico a informes@CROVEXA.com con la siguiente información:</p>
+            <p>El Usuario deberá presentar su solicitud de reembolso en un plazo máximo de cinco (5) días hábiles contados a partir de la fecha de confirmación de la compra, enviando un correo electrónico a informes@crovexa.com con la siguiente información:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Nombre completo y datos de contacto.</li>
               <li>Número de orden o comprobante de compra.</li>
