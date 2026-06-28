@@ -6,6 +6,7 @@ import { Footer } from "@/components/shared/Footer";
 import { NextIntlClientProvider } from 'next-intl';
 
 import { Playfair_Display, DM_Sans } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html lang={locale} className={`${playfair.variable} ${dmSans.variable} scroll-smooth dark`}>
@@ -45,6 +47,7 @@ export default async function LocaleLayout({
             </main>
             <Footer />
           </ClientBody>
+          {gtmId && <GoogleTagManager gtmId={gtmId} />}
         </NextIntlClientProvider>
       </body>
     </html>
